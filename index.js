@@ -1,15 +1,15 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 
-app.get('/', (req, res) => {
-    res.send('Hali');
+app.get("/", (req, res) => {
+  res.send("Hali");
 });
 
-app.get('/haligali', (req, res) => {
-    res.send('haligali');
+app.get("/haligali", (req, res) => {
+  res.send("haligali");
 });
 
 app.listen(5000, () => {
-    console.log('Server is running on 5000');
+  console.log("Server is running on 5000");
 });
-//gamer github csibesz v2
+//mac git test
