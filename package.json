@@ -22,7 +22,13 @@
   "author": "Piller Dániel László, Molnár Balázs Máté, Szántó Ákos",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "config": "^3.3.12",
     "express": "^4.21.2",
+    "express-validator": "^7.2.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.13.0",
+    "mongoose": "^8.9.5",
     "nodemon": "^3.1.9",
     "npm": "^11.0.0",
     "web-vitals": "^4.2.4"
