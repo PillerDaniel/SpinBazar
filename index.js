@@ -1,15 +1,20 @@
 const express = require("express");
 const app = express();
+const connectDB = require("./config/db");
+const authRouter = require("./routes/auth");
+
+//db connect
+connectDB();
+
+app.use(express.json());
+
+//routes
+app.use("/auth", authRouter);
 
 app.get("/", (req, res) => {
-  res.send("Hali");
+  res.send("Api running");
 });
 
-app.get("/haligali", (req, res) => {
-  res.send("haligali");
+app.listen(5001, () => {
+  console.log("Server is running on 5001");
 });
-
-app.listen(5000, () => {
-  console.log("Server is running on 5000");
-});
-//akos git test
