@@ -50,12 +50,24 @@ router.post(
       });
 
       await user.save();
-      res.status(201).json({ message: "User Created" });
+
+      // jwt token
+      const jwtData = jwt.sign(
+        { user: { id: user.id, userName: user.userName } },
+        jwtSecret,
+        {
+          expiresIn: 3600,
+        }
+      );
+
+      res.status(201).json({ message: "User Created", data: jwtData });
     } catch (err) {
       console.log(err);
       res.status(500).json({ message: "Internal server error" });
     }
   }
 );
+
+router.post("/login", async (req, res) => {});
 
 module.exports = router;
