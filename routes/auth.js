@@ -58,4 +58,40 @@ router.post(
   }
 );
 
+// Login
+// /auth/login
+
+router.post("/login", async (req, res) => {
+  const { userName, password } = req.body;
+
+  try {
+    const user = await User.findOne({ userName });
+
+    // if user doesn't exist
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // check pw
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    //if pw doesn't match
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    const jwtData = jwt.sign(
+      { user: { id: user.id, userName: user.userName } },
+      jwtSecret,
+      {
+        expiresIn: 3600,
+      }
+    );
+
+    res.status(200).json({ message: "Logged in successfully", data: jwtData });
+  } catch (err) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 module.exports = router;
