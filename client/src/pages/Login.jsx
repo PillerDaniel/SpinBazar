@@ -1,36 +1,33 @@
-// Login.jsx
-
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
-  const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!userName || !password) {
-      setError('Minden mező kitöltése kötelező!');
+      setError("Minden mező kitöltése kötelező!");
       return;
     }
 
     try {
-      const response = await axios.post('http://localhost:5001/auth/login', { userName, password });
+      const response = await axios.post("http://localhost:5001/auth/Login", { userName, password });
 
-      localStorage.setItem('token', response.data.data);  // JWT
-      localStorage.setItem('userName', response.data.userName);  // Felhasználói név
-
-      setError('');
-      navigate('/');  // Átirányítás a főoldalra
+      login(response.data.token, userName);
+      navigate("/"); 
     } catch (err) {
       if (err.response && err.response.data.message) {
         setError(err.response.data.message);
       } else {
-        setError('Hiba történt a bejelentkezés során.');
+        setError("Hiba történt a bejelentkezés során.");
       }
     }
   };
